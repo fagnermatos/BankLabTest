@@ -30,7 +30,7 @@ public class AccountService {
     public void withdraw(Integer agencyNumber,
                          Long accountNumber,
                          BigDecimal value) {
-        var account = findBy(agencyNumber, accountNumber);
+        Account account = findBy(agencyNumber, accountNumber);
         account.setBalance(account.getBalance().subtract(value));
         transactionService.save(of(value, WITHDRAW, account));
     }
@@ -39,7 +39,7 @@ public class AccountService {
     public void deposit(Integer agencyNumber,
                         Long accountNumber,
                         BigDecimal value) {
-        var account = findBy(agencyNumber, accountNumber);
+        Account account = findBy(agencyNumber, accountNumber);
         account.setBalance(account.getBalance().add(value));
         transactionService.save(of(value, DEPOSIT, account));
     }
