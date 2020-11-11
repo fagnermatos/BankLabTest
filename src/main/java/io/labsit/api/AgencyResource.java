@@ -28,7 +28,7 @@ public class AgencyResource {
 
     @PostMapping
     @ResponseStatus(CREATED)
-    public Agency save(@RequestBody @Validated Agency client) {
-        return service.saveOrUpdate(client);
+    public Agency save(@RequestBody @Validated Agency agency) {
+        return service.saveOrUpdate(agency);
     }
 }
