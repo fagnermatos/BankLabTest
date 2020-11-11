@@ -22,7 +22,7 @@ import static javax.persistence.EnumType.STRING;
 @AllArgsConstructor
 @Table(name = "transaction")
 @EqualsAndHashCode(callSuper = true)
-public class Transaction extends BaseEntity<Long> {
+public class Transaction extends BaseEntity {
 
     @JsonProperty("data")
     @Column(name = "date", nullable = false)

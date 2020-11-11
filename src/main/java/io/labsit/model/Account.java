@@ -6,8 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import org.hibernate.validator.constraints.Range;
-
 
 import javax.persistence.*;
 import javax.validation.constraints.Max;
@@ -23,9 +21,9 @@ import static javax.persistence.CascadeType.ALL;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "account")
+@Table(name = "account", uniqueConstraints = @UniqueConstraint(columnNames = {"number", "agency_id"}))
 @EqualsAndHashCode(callSuper = true)
-public class Account extends BaseEntity<Long> {
+public class Account extends BaseEntity {
 
     @JsonProperty("numero")
     @Column(name = "number", nullable = false)
@@ -41,7 +39,7 @@ public class Account extends BaseEntity<Long> {
     @Max(value = 250000, message = "{account.balance.max}")
     private BigDecimal balance;
 
-    @ManyToOne(cascade = ALL)
+    @ManyToOne
     @JsonProperty("agencia")
     @JoinColumn(name = "agency_id", foreignKey = @ForeignKey(name = "fk_account_agency"))
     @NotNull(message = "{account.agency.notnull}")
@@ -50,6 +48,7 @@ public class Account extends BaseEntity<Long> {
     @JsonIgnore
     @PrimaryKeyJoinColumn
     @OneToOne(mappedBy = "account", cascade = ALL)
+    @EqualsAndHashCode.Exclude
     private Client client;
 
     @JsonIgnore

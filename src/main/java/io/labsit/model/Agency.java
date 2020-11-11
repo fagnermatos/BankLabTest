@@ -6,7 +6,9 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -17,7 +19,7 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @Table(name = "agency")
 @EqualsAndHashCode(callSuper = true)
-public class Agency extends BaseEntity<Integer> {
+public class Agency extends BaseEntity {
 
     @JsonProperty("numero")
     @Column(name = "number", nullable = false, unique = true)

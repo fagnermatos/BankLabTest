@@ -1,7 +1,7 @@
 package io.labsit.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.labsit.model.validator.ValidClient;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -13,15 +13,14 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import static javax.persistence.CascadeType.ALL;
-
 @Data
 @Entity
+@ValidClient
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "client")
 @EqualsAndHashCode(callSuper = true)
-public class Client extends BaseEntity<Long> {
+public class Client extends BaseEntity {
 
     @JsonProperty("nome")
     @Column(name = "name", nullable = false)
