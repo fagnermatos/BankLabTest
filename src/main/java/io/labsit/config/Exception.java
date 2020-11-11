@@ -1,5 +1,7 @@
 package io.labsit.config;
 
+import io.vavr.API;
+import io.vavr.collection.Map;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -10,7 +12,6 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import javax.persistence.RollbackException;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
@@ -26,7 +27,7 @@ public class Exception {
                 .stream()
                 .map(ConstraintViolation::getMessage)
                 .collect(Collectors.joining(". "));
-        return Map.of("error", constraintViolationMessages);
+        return API.Map("error", constraintViolationMessages);
     }
 
     @ResponseStatus(BAD_REQUEST)
@@ -37,7 +38,7 @@ public class Exception {
                 .stream()
                 .map(DefaultMessageSourceResolvable::getDefaultMessage)
                 .collect(Collectors.joining(". "));
-        return Map.of("error", constraintViolationMessages);
+        return API.Map("error", constraintViolationMessages);
     }
 
     @ResponseStatus(BAD_REQUEST)
@@ -45,12 +46,12 @@ public class Exception {
     public Map<String, String> handleValidationExceptions(
             RollbackException exception) {
         String constraintViolationMessages = exception.getMessage();
-        return Map.of("error", constraintViolationMessages);
+        return API.Map("error", constraintViolationMessages);
     }
 
     @ResponseStatus(BAD_REQUEST)
     @ExceptionHandler(DataIntegrityViolationException.class)
     public Map<String, String> handleResourceNotFoundException(DataIntegrityViolationException exception) {
-        return Map.of("error", "Erro de unicidade!");
+        return API.Map("error", "Erro de unicidade!");
     }
 }
